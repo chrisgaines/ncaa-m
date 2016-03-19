@@ -36,8 +36,8 @@ while ($date->lte($season_end))
 		// Save the json to a file.
 		file_put_contents('games/' . $date->format('Ymd') . '_' . ($key + 1) . '.json', $data);
 
-		// Pause the script for 5 seconds before we move on to the next game.
-		sleep(5);
+		// Pause the script for 3 seconds before we move on to the next game.
+		sleep(3);
 	}
 
 	// On to the next day!
