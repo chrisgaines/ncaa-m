@@ -34,7 +34,7 @@ while ($date->lte($season_end))
 		$data = json_decode(str_replace('callbackWrapper(', '', str_replace(');', '', $game_file_contents)),true);
 
 		// Save the json to a file.
-		file_put_contents('games/' . $date->format('Ymd') . '_' . $key + 1 . '.json', $data);exit;
+		file_put_contents('games/' . $date->format('Ymd') . '_' . ($key + 1) . '.json', $data);
 
 		// Pause the script for 5 seconds before we move on to the next game.
 		sleep(5);
