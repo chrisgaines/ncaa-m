@@ -39,6 +39,5 @@ $failed_games = [
 	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/29/mercer-western-mich/boxscore.json',
 	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/30/hampton-grand-canyon/boxscore.json',
 	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/12/01/villanova-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/12/02/fgcu-texas-am/boxscore.json',
-	''
+	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/12/02/fgcu-texas-am/boxscore.json'
 ];
