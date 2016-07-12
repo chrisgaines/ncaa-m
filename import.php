@@ -6,52 +6,15 @@ use Carbon\Carbon;
 
 // The season starts on 11/13. Start there and increment by a day until we reach march 13th.
 date_default_timezone_set('America/New_York');
+
+// Set the start date.
 $date = Carbon::createFromDate('2015','11','13');
+// $date = Carbon::createFromDate('2015','12','03');
 
 $season_end = Carbon::createFromDate('2016','03','13');
 
 // We want to track failed games.
-// $failed_games = [];
-$failed_games = [
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/13/university-of-the-southwest-abilene-christian/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/13/drexel-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/13/portland-st-grand-canyon/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/13/texas-lutheran-incarnate-word/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/14/grambling-mid-atlantic-christ/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/14/fgcu-ohio/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/15/niagara-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/16/texas-wesleyan-fgcu/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/16/schreiner-incarnate-word/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/17/tiffin-northern-ky/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/17/howard-payne-abilene-christian/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/17/black-hills-st-grand-canyon/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/18/sacred-heart-mass-lowell/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/18/seattle-eastern-wash/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/18/loyola-maryland-umbc/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/18/buffalo-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/19/alcorn-st-grand-canyon/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/20/fla-atlantic-northeastern/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/21/florida-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/21/morehead-st-northern-ky/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/21/youngstown-st-fgcu/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/22/old-dominion-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/22/youngstown-st-bowling-green/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/22/ball-st-south-carolina-st/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/22/north-dakota-fgcu/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/23/central-ark-utsa/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/23/howard-texas-southern/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/23/bowling-green-fgcu/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/23/mississippi-val-grand-canyon/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/24/wheelock-mass-lowell/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/27/fgcu-florida/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/28/oakland-abilene-christian/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/29/cornell-mass-lowell/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/29/ave-maria-fgcu/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/29/mercer-western-mich/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/11/30/hampton-grand-canyon/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/12/01/villanova-saint-josephs/boxscore.json',
-	'http://data.ncaa.com/jsonp/game/basketball-men/d1/2015/12/02/fgcu-texas-am/boxscore.json'
-];
+$failed_games = [];
 
 while ($date->lte($season_end))
 {
@@ -69,21 +32,22 @@ while ($date->lte($season_end))
 	{
 		// remove the part of the url we don't need.
 		$url_suffix = str_replace('/sites/default/files/data/', '', str_replace('gameinfo', 'boxscore', $game));
+		$info_suffix = str_replace('/sites/default/files/data/', '', $game);
 
 		// Get the data for this game.
-		try {
-			$game_file_contents = file_get_contents($base_url . $url_suffix);
-		} catch (\ErrorException $e) {
-			// An error occured while trying to get the game data.
-			$failed_games[] = $base_url . $url_suffix;
-		}
+		$game_file_contents = file_get_contents($base_url . $url_suffix);
 		
+		$game_info_contents = file_get_contents($base_url . $info_suffix);
+		
+		$info = json_decode(str_replace('callbackWrapper(', '', str_replace(');', '', $game_info_contents)),true);
 
 		// Get rid of the callback function.
 		$data = json_decode(str_replace('callbackWrapper(', '', str_replace(');', '', $game_file_contents)),true);
 
+		$data['info'] = $info;
+		
 		// Save the json to a file.
-		file_put_contents('games/' . $date->format('Ymd') . '_' . ($key + 1) . '.json', $data);
+		file_put_contents('games/' . $date->format('Ymd') . '_' . ($key + 1) . '.json', json_encode($data));
 
 		// Pause the script for 3 seconds before we move on to the next game.
 		sleep(3);
@@ -94,6 +58,6 @@ while ($date->lte($season_end))
 }
 
 // Now that we have finished getting game data for this season, lets make sure we track which games failed.
-file_put_contents('games/failed.json',$failed_games);
+file_put_contents('info/failed.json',json_encode($failed_games));
 
 echo 'Finished importing.';
